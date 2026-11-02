@@ -19,6 +19,7 @@ def test_frame_commands_count_and_timing() -> None:
         fps=5,
         size=(640, 360),
         chrome="/fake/chrome",
+        window_offset=87,
     )
     assert len(cmds) == 10
     for i, cmd in enumerate(cmds):
@@ -33,8 +34,16 @@ def test_frame_command_flags() -> None:
     )
     cmd = cmds[0]
     assert "--headless=new" in cmd
-    assert "--window-size=1920,1080" in cmd
+    assert "--window-size=1920,1167" in cmd  # 1080 + 视口偏移 87
     assert "--force-device-scale-factor=1" in cmd
+
+
+def test_frame_command_zero_offset() -> None:
+    cmds = build_frame_commands(
+        Path("f.html"), Path("fr"), duration=0.2, fps=5, size=(640, 360), chrome="c",
+        window_offset=0,
+    )
+    assert "--window-size=640,360" in cmds[0]
 
 
 def test_mp4_command() -> None:
@@ -44,6 +53,7 @@ def test_mp4_command() -> None:
     assert any("frame_%05d.png" in c for c in cmd)
     assert cmd[-1] == "/tmp/out.mp4"
     assert "libx264" in cmd
+    assert "crop=iw:ih-87:0:0" in cmd
 
 
 def test_tts_command() -> None:

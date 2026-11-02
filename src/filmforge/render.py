@@ -14,6 +14,11 @@ CHROME_CANDIDATES = [
     "/Applications/Chromium.app/Contents/MacOS/Chromium",
 ]
 
+# headless Chrome 的窗口高度与页面视口高度的差值（macOS headless=new 实测 87px）。
+# 渲染时把窗口加高 VIEWPORT_OFFSET，使视口正好等于目标尺寸，再用 ffmpeg 裁掉多余区域；
+# 在偏移为 0 的环境（如 Linux headless）下同样成立（缩放按视口计算，裁切为安全裁剪）。
+VIEWPORT_OFFSET = 87
+
 
 class RenderError(RuntimeError):
     pass
@@ -34,8 +39,9 @@ def build_frame_commands(
     fps: int,
     size: tuple[int, int],
     chrome: str,
+    window_offset: int = VIEWPORT_OFFSET,
 ) -> list[list[str]]:
-    """纯函数：生成逐帧截图命令列表（可单测）。"""
+    """纯函数：生成逐帧截图命令列表（可单测）。窗口高度 = 目标高度 + 视口偏移。"""
     width, height = size
     commands = []
     frame_count = int(round(duration * fps))
@@ -49,7 +55,7 @@ def build_frame_commands(
                 "--disable-gpu",
                 "--hide-scrollbars",
                 "--force-device-scale-factor=1",
-                f"--window-size={width},{height}",
+                f"--window-size={width},{height + window_offset}",
                 f"--virtual-time-budget={(t * 1000 + 500):.0f}",
                 f"--screenshot={shot}",
                 f"file://{html_path}?t={t}",
@@ -59,7 +65,12 @@ def build_frame_commands(
 
 
 def build_mp4_command(
-    frames_dir: Path, out_path: Path, *, fps: int, ffmpeg: str = "ffmpeg"
+    frames_dir: Path,
+    out_path: Path,
+    *,
+    fps: int,
+    ffmpeg: str = "ffmpeg",
+    crop_bottom: int = VIEWPORT_OFFSET,
 ) -> list[str]:
     return [
         ffmpeg,
@@ -68,6 +79,8 @@ def build_mp4_command(
         str(fps),
         "-i",
         str(frames_dir / "frame_%05d.png"),
+        "-vf",
+        f"crop=iw:ih-{crop_bottom}:0:0",
         "-c:v",
         "libx264",
         "-pix_fmt",

@@ -27,4 +27,7 @@
 
 - 全部用 CSS/SVG/Canvas 程序化绘制，禁止外部图片资源
 - frame(t) 驱动一切动画；必须支持 ?t= 参数渲染任意时刻的静止帧
+- 1920x1080 设计稿适配：stage 容器固定 1920x1080，用 JS 计算 unitless 缩放
+  `transform: scale(min(innerWidth/1920, innerHeight/1080))` 并居中
+  （CSS 的 calc 会得到带 px 的长度值，scale() 只接受数字，会静默失效）
 - 声音仅提示节奏：在注释里标注每个视觉事件的节拍点（供配乐参考）
