@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>深空蓝·企业发布 demo</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  body {
+    background: radial-gradient(ellipse at 20% 80%, #16224A 0%, #0A1228 55%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  #stage { position: relative; width: 100%; height: 100%; }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(77,159,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(77,159,255,0.07) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0;
+  }
+  .ring {
+    position: absolute; left: 50%; top: 42%; width: 240px; height: 240px;
+    margin: -120px 0 0 -120px;
+    border: 2px solid #4D9FFF; border-radius: 50%;
+    transform: scale(0); opacity: 0;
+    box-shadow: 0 0 60px rgba(77,159,255,0.35) inset;
+  }
+  .ring-inner {
+    position: absolute; inset: 40px; border: 1px solid rgba(53,224,208,0.6);
+    border-radius: 50%;
+  }
+  .title {
+    position: absolute; left: 0; right: 0; top: 44%;
+    text-align: center; font-size: 72px; font-weight: 700;
+    letter-spacing: 0.12em;
+    opacity: 0; transform: translateY(40px);
+  }
+  .title .accent { color: #35E0D0; }
+  .divider {
+    position: absolute; left: 50%; top: 56%; width: 0; height: 1px;
+    background: #4D9FFF; transform: translateX(-50%);
+  }
+  .sub { position: absolute; left: 0; right: 0; top: 58%; text-align: center;
+    font-size: 22px; color: rgba(255,255,255,0.85); opacity: 0; }
+  .num-block { position: absolute; left: 14%; top: 30%; opacity: 0; }
+  .num-label {
+    writing-mode: vertical-lr; float: left; font-size: 18px;
+    color: #35E0D0; letter-spacing: 0.3em; margin-right: 32px;
+  }
+  .num-big { font-size: 150px; font-weight: 700; color: #4D9FFF; line-height: 1; }
+  .num-caption { font-size: 26px; color: rgba(255,255,255,0.85); margin-top: 12px; }
+  .bars { position: absolute; right: 14%; top: 34%; width: 300px; opacity: 0; }
+  .bar {
+    height: 10px; margin-bottom: 18px; background: rgba(77,159,255,0.15);
+    border-radius: 5px; overflow: hidden;
+  }
+  .bar i { display: block; height: 100%; width: 0; background: #4D9FFF; }
+  .slogan {
+    position: absolute; left: 0; right: 0; top: 44%; text-align: center;
+    font-size: 64px; font-weight: 700; letter-spacing: 0.1em;
+    opacity: 0; transform: scale(0.94);
+  }
+  .slogan em { font-style: normal; color: #35E0D0; }
+  .contact { position: absolute; left: 0; right: 0; bottom: 8%; text-align: center;
+    font-size: 18px; color: rgba(255,255,255,0.5); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="grid" id="grid"></div>
+  <div class="ring" id="ring"><div class="ring-inner"></div></div>
+  <div class="title" id="title">FILM<span class="accent">FORGE</span></div>
+  <div class="divider" id="divider"></div>
+  <div class="sub" id="sub">AI 宣传片制作管线</div>
+  <div class="num-block" id="numBlock">
+    <span class="num-label">成片交付</span>
+    <div class="num-big" id="numBig">0</div>
+    <div class="num-caption">小时内出片 · 单人交付 · 合规署名</div>
+  </div>
+  <div class="bars" id="bars">
+    <div class="bar"><i></i></div>
+    <div class="bar"><i></i></div>
+    <div class="bar"><i></i></div>
+  </div>
+  <div class="slogan" id="slogan">让每一帧<em>都有价值</em></div>
+  <div class="contact" id="contact">filmforge · 开源管线 · MIT</div>
+</div>
+<script>
+const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+const el = {
+  grid: document.getElementById("grid"),
+  ring: document.getElementById("ring"),
+  title: document.getElementById("title"),
+  divider: document.getElementById("divider"),
+  sub: document.getElementById("sub"),
+  numBlock: document.getElementById("numBlock"),
+  numBig: document.getElementById("numBig"),
+  bars: document.getElementById("bars"),
+  slogan: document.getElementById("slogan"),
+  contact: document.getElementById("contact"),
+};
+
+function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+function rise(t, start, dur) { return clamp01((t - start) / dur); }
+function fadeIn(t, start, dur) {
+  const k = rise(t, start, dur);
+  return { opacity: k, transform: `translateY(${(1 - k) * 40}px)` };
+}
+
+function frame(t) {
+  // 场景 1: logo 揭示 (0-3s)
+  const r1 = rise(t, 0.2, 0.8);
+  el.grid.style.opacity = 0.35 * r1;
+  el.ring.style.transform = `scale(${r1})`;
+  el.ring.style.opacity = r1;
+  const t1 = rise(t, 1.0, 0.8);
+  el.title.style.opacity = t1;
+  el.title.style.transform = `translateY(${(1 - t1) * 40}px)`;
+  el.divider.style.width = `${t1 * 320}px`;
+  el.sub.style.opacity = rise(t, 1.6, 0.6);
+
+  // 场景 2: 数据 (3-7s)，叠化转场
+  const in2 = rise(t, 3.0, 0.6), out2 = 1 - rise(t, 6.4, 0.6);
+  el.ring.style.opacity = r1 * out2;
+  el.title.style.opacity = t1 * out2;
+  el.sub.style.opacity = rise(t, 1.6, 0.6) * out2;
+  const k2 = in2 * out2;
+  el.numBlock.style.opacity = k2;
+  el.bars.style.opacity = k2;
+  const count = rise(t, 3.2, 1.6);
+  el.numBig.textContent = Math.round(count * 48);
+  const barDurs = [3.6, 4.2, 4.8];
+  document.querySelectorAll(".bar i").forEach((b, i) => {
+    const bk = rise(t, barDurs[i], 0.9);
+    b.style.width = `${bk * (60 + i * 20)}%`;
+    b.style.transition = "none";
+  });
+
+  // 场景 3: slogan (7-10s)
+  const k3 = rise(t, 7.0, 0.8);
+  el.slogan.style.opacity = k3;
+  el.slogan.style.transform = `scale(${0.94 + 0.06 * k3})`;
+  el.contact.style.opacity = rise(t, 8.0, 0.8);
+}
+
+const params = new URLSearchParams(location.search);
+const tParam = params.get("t");
+if (tParam !== null) {
+  frame(parseFloat(tParam));
+} else {
+  let t0 = performance.now();
+  function loop(now) {
+    frame((now - t0) / 1000);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>

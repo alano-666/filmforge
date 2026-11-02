@@ -1,0 +1,47 @@
+[
+  {
+    "id": "lemo-opuscar",
+    "repo": "lemomo-ai/lemo-opuscar",
+    "type": "styles",
+    "license": "MIT (code) / CC BY 4.0 (content)",
+    "commercial": true,
+    "usage": "66 种影片风格：每种风格 = 风格提示词 + 一支纯代码 demo 片。拉取后把风格提示词注入 brief prompt。",
+    "attribution": "CC BY 4.0 内容需署名 Lemo 并附链接、标注修改；MIT 代码保留版权声明"
+  },
+  {
+    "id": "mg-styles-15",
+    "repo": "Vincentwei1021/mg-styles-15",
+    "type": "styles",
+    "license": "MIT",
+    "commercial": true,
+    "usage": "15 种 MG 动效风格：每支 10 秒成片 + 风格说明 + 完整提示词 + 源码，可作风格参考与分镜素材。",
+    "attribution": "保留 LICENSE 与版权声明"
+  },
+  {
+    "id": "huashu-motion",
+    "repo": "alchaincyf/huashu-motion",
+    "type": "workflow",
+    "license": "MIT",
+    "commercial": true,
+    "usage": "完整工作流：说一句需求 → 三个方向 → 整片+配乐 → 浏览器编辑器指哪改哪。npx skills add alchaincyf/huashu-motion",
+    "attribution": "保留 LICENSE 与版权声明"
+  },
+  {
+    "id": "openfilm",
+    "repo": "openfilm/openfilm",
+    "type": "format",
+    "license": "MIT",
+    "commercial": true,
+    "usage": "film.html 成片格式（frame(t) 单函数 + 轨道合成）与 Studio 本地编辑器，用于客户审片与修改。",
+    "attribution": "保留 LICENSE 与版权声明"
+  },
+  {
+    "id": "onetake",
+    "repo": "feitangyuan/onetake",
+    "type": "styles",
+    "license": "PolyForm Noncommercial 1.0.0",
+    "commercial": false,
+    "usage": "禁止商用：仅可内部学习其「一镜到底」连续镜头思路，其代码与提示词不得用于付费交付。",
+    "attribution": "不可商用"
+  }
+]

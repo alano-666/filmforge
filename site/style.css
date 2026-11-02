@@ -1,0 +1,98 @@
+:root {
+  --bg: #0A1228;
+  --bg2: #16224A;
+  --accent: #4D9FFF;
+  --teal: #35E0D0;
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.55);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: radial-gradient(ellipse at 15% 90%, var(--bg2) 0%, var(--bg) 55%);
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 6vw; position: sticky; top: 0;
+  background: rgba(10,18,40,0.85); backdrop-filter: blur(10px); z-index: 10;
+}
+.logo { font-weight: 700; letter-spacing: 0.12em; font-size: 20px; }
+.logo span { color: var(--teal); }
+nav a { color: var(--muted); text-decoration: none; margin-left: 28px; }
+nav a:hover { color: var(--text); }
+
+section { padding: 72px 6vw; max-width: 1100px; margin: 0 auto; }
+h2 { font-size: 32px; letter-spacing: 0.06em; margin-bottom: 32px; }
+h2::before { content: "▍"; color: var(--teal); margin-right: 8px; }
+
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; min-height: 70vh; }
+.hero-anim {
+  position: relative; aspect-ratio: 16/10; border-radius: 12px; overflow: hidden;
+  background: var(--bg); border: 1px solid rgba(77,159,255,0.25);
+}
+.h-ring {
+  position: absolute; left: 50%; top: 42%; width: 200px; height: 200px;
+  margin: -100px 0 0 -100px; border: 2px solid var(--accent); border-radius: 50%;
+  animation: ringIn 1.2s cubic-bezier(0.22,1,0.36,1) both;
+  box-shadow: 0 0 60px rgba(77,159,255,0.35) inset;
+}
+.h-title {
+  position: absolute; left: 0; right: 0; top: 44%; text-align: center;
+  font-size: 40px; font-weight: 700; letter-spacing: 0.1em;
+  animation: rise 1s 0.4s cubic-bezier(0.22,1,0.36,1) both;
+}
+.h-sub {
+  position: absolute; left: 0; right: 0; top: 70%; text-align: center;
+  color: var(--muted); font-size: 15px;
+  animation: rise 1s 0.8s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes ringIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+.hero-text h1 { font-size: 40px; margin-bottom: 16px; letter-spacing: 0.04em; }
+.hero-text p { color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; gap: 16px; }
+.cta {
+  display: inline-block; padding: 12px 28px; border-radius: 8px;
+  background: var(--accent); color: #fff; text-decoration: none; font-weight: 600;
+}
+.cta.ghost { background: transparent; border: 1px solid rgba(77,159,255,0.5); color: var(--accent); }
+
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card {
+  background: rgba(22,34,74,0.5); border: 1px solid rgba(77,159,255,0.2);
+  border-radius: 12px; padding: 28px;
+}
+.card h3 { color: var(--teal); margin-bottom: 10px; }
+.card p { color: var(--muted); font-size: 15px; }
+
+.steps { padding-left: 24px; }
+.steps li { margin-bottom: 14px; color: var(--muted); }
+.steps b { color: var(--text); margin-right: 6px; }
+
+.prices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.price {
+  background: rgba(22,34,74,0.5); border: 1px solid rgba(77,159,255,0.2);
+  border-radius: 12px; padding: 32px; text-align: center;
+}
+.price.hot { border-color: var(--teal); box-shadow: 0 0 30px rgba(53,224,208,0.15); }
+.p-name { color: var(--muted); margin-bottom: 8px; }
+.p-num { font-size: 36px; font-weight: 700; color: var(--accent); margin-bottom: 16px; }
+.p-num span { font-size: 14px; color: var(--muted); font-weight: 400; }
+.price ul { list-style: none; }
+.price li { color: var(--muted); font-size: 14px; padding: 4px 0; }
+
+.contact-line { color: var(--muted); margin-bottom: 8px; }
+.contact-line a { color: var(--accent); text-decoration: none; }
+footer {
+  text-align: center; padding: 32px; color: var(--muted); font-size: 13px;
+  border-top: 1px solid rgba(77,159,255,0.15);
+}
+@media (max-width: 800px) {
+  .hero { grid-template-columns: 1fr; }
+  .cards, .prices { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "filmforge"
+version = "0.1.0"
+description = "AI 宣传片制作管线：整合开源风格库与渲染工具，brief → 分镜 → 生成 → 渲染 → 配音 → 合规交付"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["ai-video", "motion-graphics", "commercial-film", "claude-code", "pipeline"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+
+[project.scripts]
+filmforge = "filmforge.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+filmforge = ["data/*.json", "styles/*/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
