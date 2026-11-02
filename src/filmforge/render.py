@@ -52,7 +52,6 @@ def build_frame_commands(
             [
                 chrome,
                 "--headless=new",
-                "--disable-gpu",
                 "--hide-scrollbars",
                 "--force-device-scale-factor=1",
                 f"--window-size={width},{height + window_offset}",

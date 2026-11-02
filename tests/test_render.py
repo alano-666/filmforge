@@ -34,6 +34,7 @@ def test_frame_command_flags() -> None:
     )
     cmd = cmds[0]
     assert "--headless=new" in cmd
+    assert "--disable-gpu" not in cmd  # WebGL 内容截图必须去掉此 flag
     assert "--window-size=1920,1167" in cmd  # 1080 + 视口偏移 87
     assert "--force-device-scale-factor=1" in cmd
 

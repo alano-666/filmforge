@@ -1,5 +1,23 @@
 [
   {
+    "id": "three",
+    "repo": "mrdoob/three.js",
+    "type": "library",
+    "license": "MIT",
+    "commercial": true,
+    "usage": "3D 场景渲染：程序化建模、粒子系统、镜头运动（vendored 到 films/vendor/）。",
+    "attribution": "保留 LICENSE 与版权声明"
+  },
+  {
+    "id": "gsap",
+    "repo": "greensock/GSAP",
+    "type": "library",
+    "license": "GSAP Standard License（免费商用）",
+    "commercial": true,
+    "usage": "动效编排：可 seek 的时间线驱动所有 3D/2D 元素动画，与 ?t= 逐帧渲染兼容。",
+    "attribution": "保留版权声明"
+  },
+  {
     "id": "lemo-opuscar",
     "repo": "lemomo-ai/lemo-opuscar",
     "type": "styles",
